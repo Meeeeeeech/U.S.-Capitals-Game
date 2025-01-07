@@ -3,17 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>U.S. State Capitals Game</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>State Capitals Game</title>
     <link rel="apple-touch-icon" href="images/icon.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            margin: 20px 0;
+        }
+
+        #game {
+            text-align: center;
+        }
+
+        #score {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        #feedback {
+            font-size: 20px;
+            color: red;
+            margin: 10px 0;
+        }
+
+        #capitalInput {
+            width: 60%;
+            padding: 10px;
+            font-size: 18px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        #submit {
+            font-size: 20px;
+            padding: 10px 20px;
+            margin-top: 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #submit:hover {
+            background-color: #218838;
+        }
+
+        canvas {
+            border: 1px solid black;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>U.S. State Capitals Game</h1>
-    <canvas id="gameCanvas" width="800" height="600"></canvas>
-    <p id="score">Score: 0</p>
-    <input type="text" id="capitalInput" placeholder="Enter the capital" />
-    <button id="submitButton">Submit</button>
-    <p id="feedback"></p>
+    <h1>State Capitals Game</h1>
+    <div id="game">
+        <div id="score">Score: 0</div>
+        <input type="text" id="capitalInput" placeholder="Enter the capital" autofocus />
+        <br />
+        <button id="submit">Submit</button>
+        <div id="feedback"></div>
+        <canvas id="stateCanvas" width="600" height="400"></canvas>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
