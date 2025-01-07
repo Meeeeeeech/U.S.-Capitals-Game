@@ -13,23 +13,24 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start; /* Adjusted to move content up */
             height: 100vh;
             background-color: #f4f4f4;
         }
 
         h1 {
-            margin: 20px 0;
+            margin: 10px 0; /* Reduced margin to bring closer to the top */
         }
 
         #game {
             text-align: center;
+            margin-top: 10px; /* Adjusted to raise content */
         }
 
         #score {
             font-size: 24px;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 10px; /* Adjusted to reduce spacing */
         }
 
         #feedback {
@@ -66,6 +67,11 @@
         canvas {
             border: 1px solid black;
             margin-top: 20px;
+        }
+
+        /* Add space at the bottom for keyboard visibility */
+        #game {
+            margin-bottom: 30px;
         }
     </style>
 </head>

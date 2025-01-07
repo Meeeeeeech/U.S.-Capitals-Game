@@ -109,6 +109,17 @@ function checkAnswer() {
     }
 }
 
+// Autofill functionality
+document.getElementById("capitalInput").addEventListener("input", function () {
+    const input = this.value.trim();
+    if (input.length >= 3) {
+        const state = states[currentStateIndex];
+        if (state.capital.toLowerCase().startsWith(input.toLowerCase())) {
+            this.value = state.capital;
+        }
+    }
+});
+
 // Initialize the game
 document.getElementById("submit").addEventListener("click", checkAnswer);
 shuffleStates();
