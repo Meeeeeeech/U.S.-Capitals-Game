@@ -1,11 +1,4 @@
-const canvas = document.getElementById("gameCanvas");
-const ctx = canvas.getContext("2d");
-const inputBox = document.getElementById("capitalInput");
-const submitButton = document.getElementById("submitButton");
-const feedback = document.getElementById("feedback");
-const scoreDisplay = document.getElementById("score");
-
-let states = [
+const states = [
     { name: "Alabama", capital: "Montgomery", image: "images/alabama.png" },
     { name: "Alaska", capital: "Juneau", image: "images/alaska.png" },
     { name: "Arizona", capital: "Phoenix", image: "images/arizona.png" },
@@ -34,76 +27,89 @@ let states = [
     { name: "Montana", capital: "Helena", image: "images/montana.png" },
     { name: "Nebraska", capital: "Lincoln", image: "images/nebraska.png" },
     { name: "Nevada", capital: "Carson City", image: "images/nevada.png" },
-    { name: "New Hampshire", capital: "Concord", image: "images/newhampshire.png" },
-    { name: "New Jersey", capital: "Trenton", image: "images/newjersey.png" },
-    { name: "New Mexico", capital: "Santa Fe", image: "images/newmexico.png" },
-    { name: "New York", capital: "Albany", image: "images/newyork.png" },
-    { name: "North Carolina", capital: "Raleigh", image: "images/northcarolina.png" },
-    { name: "North Dakota", capital: "Bismarck", image: "images/northdakota.png" },
+    { name: "New Hampshire", capital: "Concord", image: "images/new_hampshire.png" },
+    { name: "New Jersey", capital: "Trenton", image: "images/new_jersey.png" },
+    { name: "New Mexico", capital: "Santa Fe", image: "images/new_mexico.png" },
+    { name: "New York", capital: "Albany", image: "images/new_york.png" },
+    { name: "North Carolina", capital: "Raleigh", image: "images/north_carolina.png" },
+    { name: "North Dakota", capital: "Bismarck", image: "images/north_dakota.png" },
     { name: "Ohio", capital: "Columbus", image: "images/ohio.png" },
     { name: "Oklahoma", capital: "Oklahoma City", image: "images/oklahoma.png" },
     { name: "Oregon", capital: "Salem", image: "images/oregon.png" },
     { name: "Pennsylvania", capital: "Harrisburg", image: "images/pennsylvania.png" },
-    { name: "Rhode Island", capital: "Providence", image: "images/rhodeisland.png" },
-    { name: "South Carolina", capital: "Columbia", image: "images/southcarolina.png" },
-    { name: "South Dakota", capital: "Pierre", image: "images/southdakota.png" },
+    { name: "Rhode Island", capital: "Providence", image: "images/rhode_island.png" },
+    { name: "South Carolina", capital: "Columbia", image: "images/south_carolina.png" },
+    { name: "South Dakota", capital: "Pierre", image: "images/south_dakota.png" },
     { name: "Tennessee", capital: "Nashville", image: "images/tennessee.png" },
     { name: "Texas", capital: "Austin", image: "images/texas.png" },
     { name: "Utah", capital: "Salt Lake City", image: "images/utah.png" },
     { name: "Vermont", capital: "Montpelier", image: "images/vermont.png" },
     { name: "Virginia", capital: "Richmond", image: "images/virginia.png" },
     { name: "Washington", capital: "Olympia", image: "images/washington.png" },
-    { name: "West Virginia", capital: "Charleston", image: "images/westvirginia.png" },
+    { name: "West Virginia", capital: "Charleston", image: "images/west_virginia.png" },
     { name: "Wisconsin", capital: "Madison", image: "images/wisconsin.png" },
-    { name: "Wyoming", capital: "Cheyenne", image: "images/wyoming.png" },
+    { name: "Wyoming", capital: "Cheyenne", image: "images/wyoming.png" }
 ];
 
 let currentStateIndex = 0;
 let score = 0;
 
-// Shuffle states array
-states = states.sort(() => Math.random() - 0.5);
-
-// Render state image
-function renderState() {
-    const state = states[currentStateIndex];
-    const img = new Image();
-    img.src = state.image;
-    img.onload = () => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(img, 200, 100, 400, 300);
-        ctx.font = "24px Arial";
-        ctx.textAlign = "center";
-        ctx.fillText(state.name, canvas.width / 2, 450);
-    };
-    inputBox.value = "";
-    feedback.textContent = "";
+// Shuffle states for random order
+function shuffleStates() {
+    for (let i = states.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [states[i], states[j]] = [states[j], states[i]];
+    }
 }
 
-// Check capital
-submitButton.addEventListener("click", () => {
-    const userInput = inputBox.value.trim().toLowerCase();
-    const correctCapital = states[currentStateIndex].capital.toLowerCase();
-    if (userInput === correctCapital) {
+// Load the state image
+function loadStateImage() {
+    const canvas = document.getElementById("stateCanvas");
+    const ctx = canvas.getContext("2d");
+    const state = states[currentStateIndex];
+
+    const img = new Image();
+    img.onload = function () {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        // Add state name text
+        ctx.font = "24px Arial";
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.fillText(state.name, canvas.width / 2, canvas.height - 20);
+    };
+    img.src = state.image;
+}
+
+// Check the player's answer
+function checkAnswer() {
+    const input = document.getElementById("capitalInput").value.trim();
+    const feedback = document.getElementById("feedback");
+    const state = states[currentStateIndex];
+
+    if (input.toLowerCase() === state.capital.toLowerCase()) {
+        score++;
         feedback.textContent = "Correct!";
         feedback.style.color = "green";
-        score++;
-        scoreDisplay.textContent = `Score: ${score}`;
-        currentStateIndex = (currentStateIndex + 1) % states.length;
-        renderState();
     } else {
-        feedback.textContent = "Try again!";
+        feedback.textContent = `Try again! The correct answer was ${state.capital}.`;
         feedback.style.color = "red";
     }
-});
 
-// Auto-fill feature
-inputBox.addEventListener("input", () => {
-    const input = inputBox.value.trim().toLowerCase();
-    const correctCapital = states[currentStateIndex].capital;
-    if (input.length >= 3 && correctCapital.toLowerCase().startsWith(input)) {
-        inputBox.value = correctCapital;
+    document.getElementById("score").textContent = `Score: ${score}`;
+    currentStateIndex++;
+
+    if (currentStateIndex < states.length) {
+        loadStateImage();
+        document.getElementById("capitalInput").value = "";
+    } else {
+        feedback.textContent = `Game over! Your final score is ${score}.`;
+        document.getElementById("submit").disabled = true;
     }
-});
+}
 
-renderState();
+// Initialize the game
+document.getElementById("submit").addEventListener("click", checkAnswer);
+shuffleStates();
+loadStateImage();
