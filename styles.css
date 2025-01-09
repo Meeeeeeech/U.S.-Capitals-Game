@@ -5,62 +5,64 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
     height: 100vh;
     background-color: #f4f4f4;
-    overflow: hidden;
 }
 
 h1 {
-    margin: 10px 0;
-    font-size: 2rem;
+    margin: 10px 0; /* Reduced margin */
 }
 
 #game {
     text-align: center;
     width: 100%;
-    margin-top: -20px; /* Move everything slightly up */
 }
 
 #score {
-    font-size: 1.5rem;
+    font-size: 36px;
     font-weight: bold;
-    margin: 10px 0;
+    text-align: center;
+    margin-bottom: 10px; /* Reduced margin */
+    color: #007bff;
 }
 
 #stateCanvas {
-    margin: 0 auto;
     display: block;
+    margin: 10px auto; /* Reduced margin */
     border: 1px solid black;
 }
 
 #stateName {
-    font-size: 1.2rem;
-    margin: 10px 0;
+    font-size: 28px;
     font-weight: bold;
     text-align: center;
+    margin-top: 5px; /* Reduced margin */
 }
 
-#inputArea {
-    margin: 10px 0;
+#inputContainer {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     gap: 10px;
+    margin-top: 10px; /* Reduced margin */
 }
 
 #capitalInput {
-    width: 50%;
-    padding: 10px;
-    font-size: 1rem;
+    width: 60%;
+    min-height: 50px;
     border: 2px solid #ccc;
     border-radius: 5px;
+    padding: 10px;
+    font-size: 24px;
     text-align: center;
+    text-transform: uppercase;
+    background-color: white;
 }
 
 #submit {
-    font-size: 1rem;
-    padding: 10px 20px;
+    font-size: 20px;
+    padding: 15px 25px;
     background-color: #28a745;
     color: white;
     border: none;
@@ -72,41 +74,43 @@ h1 {
     background-color: #218838;
 }
 
+#feedback {
+    font-size: 20px;
+    color: red;
+    margin: 10px 0;
+}
+
 #keyboard {
-    display: grid;
-    grid-template-columns: repeat(10, 1fr); /* Three rows of keys */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 5px; /* Reduced margin */
     gap: 10px;
-    margin: 10px auto; /* Reduced margin to move it up */
-    justify-items: center;
-    width: 90%; /* Ensures proper alignment */
 }
 
 .key {
-    display: inline-block;
-    font-size: 1rem;
-    padding: 15px 20px;
-    background-color: #ddd;
-    color: black;
-    border: 1px solid #bbb;
-    border-radius: 5px;
-    text-align: center;
-    cursor: pointer;
-}
-
-.key:hover {
-    background-color: #ccc;
-}
-
-#delete, #hint {
-    font-size: 1rem;
-    padding: 15px 30px;
-    background-color: #f44336;
+    width: 60px;
+    height: 60px;
+    background-color: #007bff;
     color: white;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 60px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
 
-#delete:hover, #hint:hover {
-    background-color: #d32f2f;
+.key:hover {
+    background-color: #0056b3;
+}
+
+.key.special {
+    width: 120px;
+    background-color: #ff6347;
+}
+
+.key.special:hover {
+    background-color: #e5533e;
 }
