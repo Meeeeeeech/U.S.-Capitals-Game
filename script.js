@@ -54,6 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let currentStateIndex = 0;
     let score = 0;
+
     const stateCanvas = document.getElementById("stateCanvas");
     const ctx = stateCanvas.getContext("2d");
     const stateNameElement = document.getElementById("stateName");
@@ -71,12 +72,12 @@ document.addEventListener("DOMContentLoaded", () => {
             ctx.drawImage(img, 0, 0, stateCanvas.width, stateCanvas.height);
         };
         stateNameElement.textContent = state.name;
-        capitalInput.textContent = "";
+        capitalInput.value = "";
         feedback.textContent = "";
     }
 
     function checkAnswer() {
-        const userAnswer = capitalInput.textContent.trim();
+        const userAnswer = capitalInput.value.trim().toUpperCase();
         const correctAnswer = states[currentStateIndex].capital.toUpperCase();
         if (userAnswer === correctAnswer) {
             score++;
@@ -98,10 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
             key.textContent = letter;
             key.className = "key";
             key.addEventListener("click", () => {
-                capitalInput.textContent += letter;
-                if (capitalInput.textContent.length === 3) {
-                    autoFill();
-                }
+                capitalInput.value += letter;
             });
             keyboard.appendChild(key);
         });
@@ -110,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
         deleteKey.textContent = "DELETE";
         deleteKey.className = "key special";
         deleteKey.addEventListener("click", () => {
-            capitalInput.textContent = capitalInput.textContent.slice(0, -1);
+            capitalInput.value = capitalInput.value.slice(0, -1);
         });
         keyboard.appendChild(deleteKey);
 
@@ -119,16 +117,9 @@ document.addEventListener("DOMContentLoaded", () => {
         hintKey.className = "key special";
         hintKey.addEventListener("click", () => {
             const correctAnswer = states[currentStateIndex].capital.toUpperCase();
-            capitalInput.textContent = correctAnswer.charAt(0);
+            capitalInput.value = correctAnswer.charAt(0);
         });
         keyboard.appendChild(hintKey);
-    }
-
-    function autoFill() {
-        const correctAnswer = states[currentStateIndex].capital.toUpperCase();
-        if (capitalInput.textContent.toUpperCase() === correctAnswer.slice(0, 3)) {
-            capitalInput.textContent = correctAnswer;
-        }
     }
 
     document.getElementById("submit").addEventListener("click", checkAnswer);
