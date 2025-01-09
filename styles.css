@@ -5,13 +5,15 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     height: 100vh;
     background-color: #f4f4f4;
+    overflow: hidden;
 }
 
 h1 {
-    margin: 10px 0; /* Reduced margin */
+    margin: 10px 0;
+    font-size: 2rem;
 }
 
 #game {
@@ -20,49 +22,44 @@ h1 {
 }
 
 #score {
-    font-size: 36px;
+    font-size: 1.5rem;
     font-weight: bold;
-    text-align: center;
-    margin-bottom: 10px; /* Reduced margin */
-    color: #007bff;
+    margin: 10px 0;
 }
 
 #stateCanvas {
+    margin: 0 auto;
     display: block;
-    margin: 10px auto; /* Reduced margin */
     border: 1px solid black;
 }
 
 #stateName {
-    font-size: 28px;
+    font-size: 1.2rem;
+    margin: 10px 0;
     font-weight: bold;
     text-align: center;
-    margin-top: 5px; /* Reduced margin */
 }
 
-#inputContainer {
+#inputArea {
+    margin: 10px 0;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     gap: 10px;
-    margin-top: 10px; /* Reduced margin */
 }
 
 #capitalInput {
-    width: 60%;
-    min-height: 50px;
+    width: 50%;
+    padding: 10px;
+    font-size: 1rem;
     border: 2px solid #ccc;
     border-radius: 5px;
-    padding: 10px;
-    font-size: 24px;
     text-align: center;
-    text-transform: uppercase;
-    background-color: white;
 }
 
 #submit {
-    font-size: 20px;
-    padding: 15px 25px;
+    font-size: 1rem;
+    padding: 10px 20px;
     background-color: #28a745;
     color: white;
     border: none;
@@ -74,43 +71,41 @@ h1 {
     background-color: #218838;
 }
 
-#feedback {
-    font-size: 20px;
-    color: red;
-    margin: 10px 0;
-}
-
 #keyboard {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 5px; /* Reduced margin */
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
     gap: 10px;
+    margin: 20px 0;
+    justify-items: center;
 }
 
 .key {
-    width: 60px;
-    height: 60px;
-    background-color: #007bff;
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
+    display: inline-block;
+    font-size: 1rem;
+    padding: 15px 20px;
+    background-color: #ddd;
+    color: black;
+    border: 1px solid #bbb;
+    border-radius: 5px;
     text-align: center;
-    line-height: 60px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.key:hover {
+    background-color: #ccc;
+}
+
+#delete, #hint {
+    font-size: 1rem;
+    padding: 15px 30px;
+    background-color: #f44336;
+    color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
 
-.key:hover {
-    background-color: #0056b3;
-}
-
-.key.special {
-    width: 120px;
-    background-color: #ff6347;
-}
-
-.key.special:hover {
-    background-color: #e5533e;
+#delete:hover, #hint:hover {
+    background-color: #d32f2f;
 }
