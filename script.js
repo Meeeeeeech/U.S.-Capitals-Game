@@ -56,7 +56,7 @@ let score = 0;
 
 const stateCanvas = document.getElementById("stateCanvas");
 const stateNameDiv = document.getElementById("stateName");
-const capitalInput = document.getElementById("capitalInput");
+const capitalInputDiv = document.getElementById("capitalInput");
 const feedbackDiv = document.getElementById("feedback");
 const scoreDiv = document.getElementById("score");
 const keyboardDiv = document.getElementById("keyboard");
@@ -80,16 +80,16 @@ function loadNextState() {
         const state = states[currentStateIndex];
         drawStateImage(state);
         stateNameDiv.textContent = state.name;
-        capitalInput.value = "";
+        capitalInputDiv.textContent = "";
         feedbackDiv.textContent = "";
     }
 }
 
 function checkAnswer() {
-    const input = capitalInput.value.trim();
+    const input = capitalInputDiv.textContent.trim().toUpperCase();
     const correctAnswer = states[currentStateIndex].capital.toUpperCase();
 
-    if (input.toUpperCase() === correctAnswer) {
+    if (input === correctAnswer) {
         feedbackDiv.textContent = "Correct!";
         score++;
         scoreDiv.textContent = `Score: ${score}`;
@@ -100,8 +100,6 @@ function checkAnswer() {
     }
 }
 
-document.getElementById("submit").addEventListener("click", checkAnswer);
-
 function setupKeyboard() {
     const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
@@ -111,8 +109,15 @@ function setupKeyboard() {
         key.textContent = letter;
         key.className = "keyboard-key";
         key.addEventListener("click", () => {
-            capitalInput.value += letter;
-            capitalInput.focus();
+            const currentInput = capitalInputDiv.textContent.trim().toUpperCase();
+            const correctAnswer = states[currentStateIndex].capital.toUpperCase();
+
+            capitalInputDiv.textContent += letter;
+
+            // Autofill logic
+            if (currentInput.length >= 2 && correctAnswer.startsWith(currentInput + letter)) {
+                capitalInputDiv.textContent = correctAnswer;
+            }
         });
         keyboardDiv.appendChild(key);
     });
@@ -122,8 +127,7 @@ function setupKeyboard() {
     deleteKey.textContent = "DELETE";
     deleteKey.className = "keyboard-key keyboard-special";
     deleteKey.addEventListener("click", () => {
-        capitalInput.value = "";
-        capitalInput.focus();
+        capitalInputDiv.textContent = "";
     });
     keyboardDiv.appendChild(deleteKey);
 
@@ -133,19 +137,12 @@ function setupKeyboard() {
     hintKey.className = "keyboard-key keyboard-special hint";
     hintKey.addEventListener("click", () => {
         const correctAnswer = states[currentStateIndex].capital.toUpperCase();
-        capitalInput.value = correctAnswer.charAt(0);
-        capitalInput.focus();
+        capitalInputDiv.textContent = correctAnswer.charAt(0);
     });
     keyboardDiv.appendChild(hintKey);
 }
 
-capitalInput.addEventListener("input", () => {
-    const input = capitalInput.value.trim().toUpperCase();
-    const correctAnswer = states[currentStateIndex].capital.toUpperCase();
-    if (input.length >= 3 && correctAnswer.startsWith(input)) {
-        capitalInput.value = correctAnswer;
-    }
-});
+document.getElementById("submit").addEventListener("click", checkAnswer);
 
 setupKeyboard();
 loadNextState();
