@@ -1,9 +1,37 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100vh;
+    background-color: #f4f4f4;
+}
+
+h1 {
+    margin: 20px 0;
+}
+
+#game {
+    text-align: center;
+    width: 100%;
+}
+
 #score {
     font-size: 36px;
     font-weight: bold;
     text-align: center;
     margin-bottom: 20px;
     color: #007bff;
+}
+
+#stateCanvas {
+    display: block;
+    margin: 0 auto;
+    border: 1px solid black;
+    margin-top: 20px;
 }
 
 #stateName {
@@ -28,13 +56,9 @@
     border-radius: 5px;
     padding: 10px;
     font-size: 24px;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    overflow-x: auto;
-    white-space: nowrap;
+    text-align: center;
     text-transform: uppercase;
+    background-color: white;
 }
 
 #submit {
@@ -51,7 +75,43 @@
     background-color: #218838;
 }
 
-canvas {
-    border: 1px solid black;
+#feedback {
+    font-size: 20px;
+    color: red;
+    margin: 10px 0;
+}
+
+#keyboard {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     margin-top: 20px;
+    gap: 10px;
+}
+
+.key {
+    width: 60px;
+    height: 60px;
+    background-color: #007bff;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 60px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.key:hover {
+    background-color: #0056b3;
+}
+
+.key.special {
+    width: 120px;
+    background-color: #ff6347;
+}
+
+.key.special:hover {
+    background-color: #e5533e;
 }
