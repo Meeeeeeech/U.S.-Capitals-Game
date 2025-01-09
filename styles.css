@@ -1,56 +1,57 @@
-.input-display {
+#score {
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #007bff;
+}
+
+#stateName {
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+}
+
+#inputContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+#capitalInput {
     width: 60%;
-    min-height: 40px;
+    min-height: 50px;
     border: 2px solid #ccc;
     border-radius: 5px;
     padding: 10px;
-    font-size: 18px;
+    font-size: 24px;
     background-color: white;
     display: flex;
     align-items: center;
     justify-content: flex-start;
     overflow-x: auto;
     white-space: nowrap;
-    margin: 0 auto;
     text-transform: uppercase;
 }
 
-#keyboard {
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.keyboard-key {
-    padding: 10px;
-    background-color: #007bff;
+#submit {
+    font-size: 20px;
+    padding: 15px 25px;
+    background-color: #28a745;
     color: white;
-    font-size: 18px;
-    text-align: center;
+    border: none;
     border-radius: 5px;
     cursor: pointer;
-    user-select: none;
 }
 
-.keyboard-key:hover {
-    background-color: #0056b3;
-}
-
-.keyboard-special {
-    grid-column: span 2;
-    background-color: #ff4757;
-    font-size: 18px;
-}
-
-.keyboard-special.hint {
-    background-color: #28a745;
-}
-
-.keyboard-special:hover {
-    background-color: #c0392b;
-}
-
-.keyboard-special.hint:hover {
+#submit:hover {
     background-color: #218838;
+}
+
+canvas {
+    border: 1px solid black;
+    margin-top: 20px;
 }
