@@ -5,25 +5,27 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     height: 100vh;
     background-color: #f4f4f4;
 }
 
 h1 {
-    margin: 5px 0; /* Reduced margin */
+    margin: 5px 0; /* Reduced space above and below title */
     font-size: 2rem;
+    text-align: center;
 }
 
 #game {
     text-align: center;
     width: 100%;
+    margin-top: -20px; /* Moves everything slightly up */
 }
 
 #score {
     font-size: 1.5rem;
     font-weight: bold;
-    margin: 5px 0; /* Reduced margin for leading */
+    margin: 5px 0; /* Reduced space below score */
 }
 
 #stateCanvas {
@@ -72,9 +74,11 @@ h1 {
 
 #keyboard {
     display: grid;
-    grid-template-columns: repeat(10, 1fr); /* Arrange keys into 3 rows */
+    grid-template-columns: repeat(10, 1fr); /* Three rows with 10 keys per row */
     gap: 10px;
-    margin: 10px auto; /* Adjust margin for placement */
+    margin: 10px auto; /* Adjusted to bring the keyboard up */
+    justify-items: center;
+    width: 90%; /* Ensures keys align nicely */
 }
 
 .key {
@@ -93,7 +97,7 @@ h1 {
 }
 
 .key.special {
-    grid-column: span 2; /* Larger keys */
+    grid-column: span 2; /* Larger keys for DELETE and HINT */
     background-color: #f44336;
 }
 

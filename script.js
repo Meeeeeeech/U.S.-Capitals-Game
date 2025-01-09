@@ -100,6 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
             key.className = "key";
             key.addEventListener("click", () => {
                 capitalInput.value += letter;
+                if (capitalInput.value.length >= 3) autoFill();
             });
             keyboard.appendChild(key);
         });
@@ -120,6 +121,13 @@ document.addEventListener("DOMContentLoaded", () => {
             capitalInput.value = correctAnswer.charAt(0);
         });
         keyboard.appendChild(hintKey);
+    }
+
+    function autoFill() {
+        const correctAnswer = states[currentStateIndex].capital.toUpperCase();
+        if (correctAnswer.startsWith(capitalInput.value.toUpperCase())) {
+            capitalInput.value = correctAnswer;
+        }
     }
 
     document.getElementById("submit").addEventListener("click", checkAnswer);
