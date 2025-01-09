@@ -12,18 +12,18 @@ body {
 }
 
 h1 {
-    margin: 5px 0;
+    margin: 10px 0;
     font-size: 2rem;
 }
 
 #game {
     text-align: center;
     width: 100%;
-    margin-top: -20px; /* Move elements up */
+    margin-top: -20px; /* Move everything slightly up */
 }
 
 #score {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     font-weight: bold;
     margin: 10px 0;
 }
@@ -35,7 +35,7 @@ h1 {
 }
 
 #stateName {
-    font-size: 2rem; /* Matches title size */
+    font-size: 1.2rem;
     margin: 10px 0;
     font-weight: bold;
     text-align: center;
@@ -52,15 +52,15 @@ h1 {
 #capitalInput {
     width: 50%;
     padding: 10px;
-    font-size: 1.2rem;
+    font-size: 1rem;
     border: 2px solid #ccc;
     border-radius: 5px;
     text-align: center;
 }
 
 #submit {
-    font-size: 1.2rem;
-    padding: 12px 25px;
+    font-size: 1rem;
+    padding: 10px 20px;
     background-color: #28a745;
     color: white;
     border: none;
@@ -74,24 +74,23 @@ h1 {
 
 #keyboard {
     display: grid;
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(10, 1fr); /* Three rows of keys */
     gap: 10px;
-    margin: 20px 0;
+    margin: 10px auto; /* Reduced margin to move it up */
     justify-items: center;
+    width: 90%; /* Ensures proper alignment */
 }
 
 .key {
     display: inline-block;
-    font-size: 1.2rem;
-    padding: 20px 25px; /* Larger keys */
+    font-size: 1rem;
+    padding: 15px 20px;
     background-color: #ddd;
     color: black;
     border: 1px solid #bbb;
     border-radius: 5px;
     text-align: center;
     cursor: pointer;
-    margin: 5px;
-    min-width: 50px;
 }
 
 .key:hover {
@@ -99,8 +98,8 @@ h1 {
 }
 
 #delete, #hint {
-    font-size: 1.2rem;
-    padding: 20px 40px; /* Oblong keys */
+    font-size: 1rem;
+    padding: 15px 30px;
     background-color: #f44336;
     color: white;
     border: none;
