@@ -12,17 +12,18 @@ body {
 }
 
 h1 {
-    margin: 10px 0;
+    margin: 5px 0;
     font-size: 2rem;
 }
 
 #game {
     text-align: center;
     width: 100%;
+    margin-top: -20px; /* Move elements up */
 }
 
 #score {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: bold;
     margin: 10px 0;
 }
@@ -34,7 +35,7 @@ h1 {
 }
 
 #stateName {
-    font-size: 1.2rem;
+    font-size: 2rem; /* Matches title size */
     margin: 10px 0;
     font-weight: bold;
     text-align: center;
@@ -51,15 +52,15 @@ h1 {
 #capitalInput {
     width: 50%;
     padding: 10px;
-    font-size: 1rem;
+    font-size: 1.2rem;
     border: 2px solid #ccc;
     border-radius: 5px;
     text-align: center;
 }
 
 #submit {
-    font-size: 1rem;
-    padding: 10px 20px;
+    font-size: 1.2rem;
+    padding: 12px 25px;
     background-color: #28a745;
     color: white;
     border: none;
@@ -81,8 +82,8 @@ h1 {
 
 .key {
     display: inline-block;
-    font-size: 1rem;
-    padding: 15px 20px;
+    font-size: 1.2rem;
+    padding: 20px 25px; /* Larger keys */
     background-color: #ddd;
     color: black;
     border: 1px solid #bbb;
@@ -90,6 +91,7 @@ h1 {
     text-align: center;
     cursor: pointer;
     margin: 5px;
+    min-width: 50px;
 }
 
 .key:hover {
@@ -97,8 +99,8 @@ h1 {
 }
 
 #delete, #hint {
-    font-size: 1rem;
-    padding: 15px 30px;
+    font-size: 1.2rem;
+    padding: 20px 40px; /* Oblong keys */
     background-color: #f44336;
     color: white;
     border: none;
