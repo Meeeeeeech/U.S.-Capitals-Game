@@ -79,7 +79,7 @@ h1 {
     gap: 10px;
     justify-content: center;
     margin: 20px auto; /* Center keyboard vertically and horizontally */
-    max-width: 90%; /* Ensures the keyboard fits within the screen */
+    max-width: 80%; /* Ensures the keyboard fits within the screen */
 }
 
 .key {
