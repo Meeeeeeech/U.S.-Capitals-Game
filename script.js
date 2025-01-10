@@ -81,6 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function generateKeyboard() {
         const keyboard = document.getElementById("keyboard");
+        keyboard.innerHTML = ""; // Clear any existing keyboard buttons
         const keys = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
         keys.forEach((key) => {
             const button = document.createElement("button");
@@ -94,6 +95,27 @@ document.addEventListener("DOMContentLoaded", () => {
             });
             keyboard.appendChild(button);
         });
+
+        // Add special buttons (DELETE and HINT)
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "DELETE";
+        deleteButton.className = "key special";
+        deleteButton.addEventListener("click", () => {
+            if (!capitalInput.readOnly) {
+                capitalInput.value = capitalInput.value.slice(0, -1); // Remove the last letter
+            }
+        });
+        keyboard.appendChild(deleteButton);
+
+        const hintButton = document.createElement("button");
+        hintButton.textContent = "HINT";
+        hintButton.className = "key special";
+        hintButton.addEventListener("click", () => {
+            const correctCapital = states[currentStateIndex].capital;
+            capitalInput.value = correctCapital.slice(0, capitalInput.value.length + 1); // Reveal the next letter
+            autoFill();
+        });
+        keyboard.appendChild(hintButton);
     }
 
     function loadNextState() {
