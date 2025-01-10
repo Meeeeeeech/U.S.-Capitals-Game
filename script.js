@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const states = [
-        { name: "Alabama", capital: "Montgomery" },
-        { name: "Alaska", capital: "Juneau" },
+        { name: "Alabama", capital: "Montgomery", image: "images/alabama.png" },
+        { name: "Alaska", capital: "Juneau", image: "images/alaska.png" },
         { name: "Arizona", capital: "Phoenix", image: "images/arizona.png" },
         { name: "Arkansas", capital: "Little Rock", image: "images/arkansas.png" },
         { name: "California", capital: "Sacramento", image: "images/california.png" },
@@ -53,33 +53,85 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
 
     let currentStateIndex = 0;
+    let score = 0;
+
+    const stateCanvas = document.getElementById("stateCanvas");
+    const ctx = stateCanvas.getContext("2d");
+    const stateNameElement = document.getElementById("stateName");
     const capitalInput = document.getElementById("capitalInput");
+    const feedback = document.getElementById("feedback");
+    const scoreElement = document.getElementById("score");
+    const keyboard = document.getElementById("keyboard");
+
+    function loadState() {
+        const state = states[currentStateIndex];
+        const img = new Image();
+        img.src = state.image;
+        img.onload = () => {
+            ctx.clearRect(0, 0, stateCanvas.width, stateCanvas.height);
+            ctx.drawImage(img, 0, 0, stateCanvas.width, stateCanvas.height);
+        };
+        stateNameElement.textContent = state.name;
+        capitalInput.value = "";
+        feedback.textContent = "";
+    }
+
+    function checkAnswer() {
+        const userAnswer = capitalInput.value.trim().toUpperCase();
+        const correctAnswer = states[currentStateIndex].capital.toUpperCase();
+        if (userAnswer === correctAnswer) {
+            score++;
+            feedback.textContent = "Correct!";
+            feedback.style.color = "green";
+        } else {
+            feedback.textContent = "Try again!";
+            feedback.style.color = "red";
+        }
+        scoreElement.textContent = `Score: ${score}`;
+        currentStateIndex = (currentStateIndex + 1) % states.length;
+        setTimeout(loadState, 1000);
+    }
+
+    function createKeyboard() {
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+        letters.forEach((letter) => {
+            const key = document.createElement("button");
+            key.textContent = letter;
+            key.className = "key";
+            key.addEventListener("click", () => {
+                capitalInput.value += letter;
+                if (capitalInput.value.length >= 3) autoFill();
+            });
+            keyboard.appendChild(key);
+        });
+
+        const deleteKey = document.createElement("button");
+        deleteKey.textContent = "DELETE";
+        deleteKey.className = "key special";
+        deleteKey.addEventListener("click", () => {
+            capitalInput.value = capitalInput.value.slice(0, -1);
+        });
+        keyboard.appendChild(deleteKey);
+
+        const hintKey = document.createElement("button");
+        hintKey.textContent = "HINT";
+        hintKey.className = "key special";
+        hintKey.addEventListener("click", () => {
+            const correctAnswer = states[currentStateIndex].capital.toUpperCase();
+            capitalInput.value = correctAnswer.charAt(0);
+        });
+        keyboard.appendChild(hintKey);
+    }
 
     function autoFill() {
-        const correctCapital = states[currentStateIndex].capital;
-        if (capitalInput.value.toLowerCase() === correctCapital.slice(0, capitalInput.value.length).toLowerCase()) {
-            capitalInput.value = correctCapital; // Autofill the remaining characters
-            capitalInput.readOnly = true; // Lock the input to prevent further typing
+        const correctAnswer = states[currentStateIndex].capital.toUpperCase();
+        if (correctAnswer.startsWith(capitalInput.value.toUpperCase())) {
+            capitalInput.value = correctAnswer;
         }
     }
 
-    function resetInput() {
-        capitalInput.value = ""; // Clear the input field
-        capitalInput.readOnly = false; // Unlock the input for the next round
-    }
+    document.getElementById("submit").addEventListener("click", checkAnswer);
 
-    document.getElementById("submit").addEventListener("click", () => {
-        resetInput();
-        currentStateIndex = (currentStateIndex + 1) % states.length;
-    });
-
-    // Add event listeners to virtual keyboard buttons
-    document.querySelectorAll(".key").forEach((key) => {
-        key.addEventListener("click", () => {
-            if (!capitalInput.readOnly) { // Only allow input if not locked
-                capitalInput.value += key.textContent;
-                autoFill();
-            }
-        });
-    });
+    createKeyboard();
+    loadState();
 });
