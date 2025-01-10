@@ -59,10 +59,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function loadStateImage(stateName) {
         const img = new Image();
-        img.src = `images/${stateName}.png`;
+        img.src = `images/${stateName}.png`; // Path to the state image
+        console.log(`Loading image: ${img.src}`); // Log the image path
+
         img.onload = () => {
             ctx.clearRect(0, 0, stateCanvas.width, stateCanvas.height);
             ctx.drawImage(img, 0, 0, stateCanvas.width, stateCanvas.height);
+        };
+
+        img.onerror = () => {
+            console.error(`Failed to load image: ${img.src}`);
         };
     }
 
@@ -96,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
             keyboard.appendChild(button);
         });
 
-        // Add special buttons (DELETE and HINT)
+        // Add DELETE button
         const deleteButton = document.createElement("button");
         deleteButton.textContent = "DELETE";
         deleteButton.className = "key special";
@@ -107,6 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         keyboard.appendChild(deleteButton);
 
+        // Add HINT button
         const hintButton = document.createElement("button");
         hintButton.textContent = "HINT";
         hintButton.className = "key special";
