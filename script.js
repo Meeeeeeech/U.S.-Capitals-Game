@@ -1,9 +1,3 @@
-document.addEventListener("touchmove", function(event) {
-    if (event.scale !== 1) {
-        event.preventDefault(); // Prevent zooming
-    }
-}, { passive: false });
-
 document.addEventListener("DOMContentLoaded", () => {
     const states = [
         { name: "Alabama", capital: "Montgomery", image: "images/alabama.png" },
