@@ -78,7 +78,7 @@ h1 {
     gap: 10px;
     justify-content: center; /* Center the keyboard */
     margin: 20px auto; /* Center on the page */
-    width: 90%; /* Ensures keys align nicely */
+    width: 50%; /* Ensures keys align nicely */
 }
 
 .key {
