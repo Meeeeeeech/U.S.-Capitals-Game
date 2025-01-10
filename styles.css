@@ -76,8 +76,8 @@ h1 {
     display: grid;
     grid-template-columns: repeat(10, 1fr); /* Three rows with 10 keys per row */
     gap: 10px;
-    margin: 10px auto; /* Adjusted to bring the keyboard up */
-    justify-items: center;
+    justify-content: center; /* Center the keyboard */
+    margin: 20px auto; /* Center on the page */
     width: 90%; /* Ensures keys align nicely */
 }
 
