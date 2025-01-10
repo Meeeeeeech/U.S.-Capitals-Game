@@ -54,6 +54,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let currentStateIndex = 0;
     const capitalInput = document.getElementById("capitalInput");
+    const stateCanvas = document.getElementById("stateCanvas");
+    const ctx = stateCanvas.getContext("2d");
+
+    function loadStateImage(stateName) {
+        const img = new Image();
+        img.src = `images/${stateName}.png`;
+        img.onload = () => {
+            ctx.clearRect(0, 0, stateCanvas.width, stateCanvas.height);
+            ctx.drawImage(img, 0, 0, stateCanvas.width, stateCanvas.height);
+        };
+    }
 
     function autoFill() {
         const correctCapital = states[currentStateIndex].capital;
@@ -68,18 +79,34 @@ document.addEventListener("DOMContentLoaded", () => {
         capitalInput.readOnly = false; // Unlock the input for the next round
     }
 
+    function generateKeyboard() {
+        const keyboard = document.getElementById("keyboard");
+        const keys = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+        keys.forEach((key) => {
+            const button = document.createElement("button");
+            button.textContent = key;
+            button.className = "key";
+            button.addEventListener("click", () => {
+                if (!capitalInput.readOnly) { // Only allow input if not locked
+                    capitalInput.value += key;
+                    autoFill();
+                }
+            });
+            keyboard.appendChild(button);
+        });
+    }
+
+    function loadNextState() {
+        document.getElementById("stateName").textContent = states[currentStateIndex].name;
+        loadStateImage(states[currentStateIndex].name);
+    }
+
     document.getElementById("submit").addEventListener("click", () => {
         resetInput();
         currentStateIndex = (currentStateIndex + 1) % states.length;
+        loadNextState();
     });
 
-    // Add event listeners to virtual keyboard buttons
-    document.querySelectorAll(".key").forEach((key) => {
-        key.addEventListener("click", () => {
-            if (!capitalInput.readOnly) { // Only allow input if not locked
-                capitalInput.value += key.textContent;
-                autoFill();
-            }
-        });
-    });
+    generateKeyboard();
+    loadNextState(); // Load the first state on page load
 });
