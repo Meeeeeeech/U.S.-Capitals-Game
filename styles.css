@@ -1,4 +1,4 @@
-html, body {
+body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -8,8 +8,8 @@ html, body {
     justify-content: flex-start;
     height: 100vh;
     background-color: #f4f4f4;
-    touch-action: manipulation; /* Disables pinch gestures */
-    overscroll-behavior: contain; /* Prevent scrolling beyond bounds */
+    touch-action: manipulation; /* Disables pinch-to-zoom */
+    overscroll-behavior: contain; /* Prevents unintended scrolling effects */
 }
 
 h1 {
