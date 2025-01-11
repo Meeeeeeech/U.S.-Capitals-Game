@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
             <div id="keyboard"></div>
         `;
-        initializeGame();
+        initializeGame(); // Reinitialize the game
     }
 
     function loadNextState() {
@@ -170,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function initializeGame() {
-        generateKeyboard();
+        generateKeyboard(); // Generate the keyboard first
         document.getElementById("submit").addEventListener("click", () => {
             const correctCapital = states[currentStateIndex].capital;
             if (capitalInput.value.toLowerCase() === correctCapital.toLowerCase()) {
@@ -179,7 +179,7 @@ document.addEventListener("DOMContentLoaded", () => {
             currentStateIndex++;
             loadNextState();
         });
-        loadNextState();
+        loadNextState(); // Load the first state
     }
 
     initializeGame();
