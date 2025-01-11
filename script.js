@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const input = document.getElementById("capitalInput");
         const correctCapital = states[currentStateIndex].capital;
 
-        // Autofill when the first three letters match
+        // Check if the first letters match
         if (input.value.toLowerCase() === correctCapital.slice(0, input.value.length).toLowerCase()) {
             if (input.value.length === 3) {
                 input.value = correctCapital;
