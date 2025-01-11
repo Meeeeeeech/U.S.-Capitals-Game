@@ -77,11 +77,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const input = document.getElementById("capitalInput");
         const correctCapital = states[currentStateIndex].capital;
 
-        // Check if the first letters match
         if (input.value.toLowerCase() === correctCapital.slice(0, input.value.length).toLowerCase()) {
             if (input.value.length === 3) {
                 input.value = correctCapital;
-                input.readOnly = true; // Lock input to prevent further typing
+                input.readOnly = true;
             }
         }
     }
@@ -110,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const input = document.getElementById("capitalInput");
                 if (!input.readOnly) {
                     input.value += key;
-                    autoFill(); // Check autofill after each letter
+                    autoFill();
                 }
             });
             keyboard.appendChild(button);
@@ -156,6 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
         currentStateIndex = 0;
         score = 0;
         gameContainer.innerHTML = `
+            <div id="score" style="font-size: 1.5rem; margin: 10px;">Score: 0</div>
             <canvas id="stateCanvas" width="600" height="400"></canvas>
             <div id="stateName" style="font-size: 2rem; font-weight: bold;"></div>
             <div id="inputArea">
