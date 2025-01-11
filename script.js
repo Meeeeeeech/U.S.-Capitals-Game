@@ -76,8 +76,11 @@ document.addEventListener("DOMContentLoaded", () => {
     function autoFill() {
         const correctCapital = states[currentStateIndex].capital;
         if (capitalInput.value.toLowerCase() === correctCapital.slice(0, capitalInput.value.length).toLowerCase()) {
-            capitalInput.value = correctCapital; // Autofill the remaining characters
-            capitalInput.readOnly = true; // Lock the input to prevent further typing
+            // Autofill only after 3 correct letters
+            if (capitalInput.value.length === 3) {
+                capitalInput.value = correctCapital; // Autofill the remaining characters
+                capitalInput.readOnly = true; // Lock the input to prevent further typing
+            }
         }
     }
 
@@ -120,8 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
         hintButton.className = "key special";
         hintButton.addEventListener("click", () => {
             const correctCapital = states[currentStateIndex].capital;
-            capitalInput.value = correctCapital.slice(0, capitalInput.value.length + 1); // Reveal the next letter
-            autoFill();
+            capitalInput.value = correctCapital.charAt(0); // Reveal only the first letter
         });
         keyboard.appendChild(hintButton);
     }
