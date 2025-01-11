@@ -59,7 +59,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function loadStateImage(stateName) {
         const img = new Image();
-        img.src = `images/${stateName}.png`; // Path to the state image
+        const stateNameLower = stateName.toLowerCase(); // Convert to lowercase
+        img.src = `images/${stateNameLower}.png`; // Path to the state image
         console.log(`Loading image: ${img.src}`); // Debug log for the image path
 
         img.onload = () => {
