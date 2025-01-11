@@ -61,9 +61,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function loadStateImage(stateName) {
         const img = new Image();
-        const stateNameLower = stateName.toLowerCase(); // Convert to lowercase
+        const stateNameLower = stateName.toLowerCase().replace(/\s/g, ""); // Convert to lowercase and remove spaces
         img.src = `images/${stateNameLower}.png`; // Path to the state image
-        console.log(`Loading image: ${img.src}`); // Debug log for the image path
+        console.log(`Attempting to load image: ${img.src}`); // Debug log for the image path
 
         img.onload = () => {
             ctx.clearRect(0, 0, stateCanvas.width, stateCanvas.height);
@@ -72,6 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         img.onerror = () => {
             console.error(`Failed to load image: ${img.src}`);
+            alert(`Error loading image for ${stateName}. Please check the image file.`);
         };
     }
 
