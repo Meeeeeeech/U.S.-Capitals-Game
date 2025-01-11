@@ -73,10 +73,28 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     }
 
+    function autoFill() {
+        const input = document.getElementById("capitalInput");
+        const correctCapital = states[currentStateIndex].capital;
+
+        // Autofill when the first three letters match
+        if (input.value.toLowerCase() === correctCapital.slice(0, input.value.length).toLowerCase()) {
+            if (input.value.length === 3) {
+                input.value = correctCapital;
+                input.readOnly = true;
+            }
+        }
+    }
+
     function resetInput() {
         const input = document.getElementById("capitalInput");
         input.value = "";
         input.readOnly = false;
+    }
+
+    function updateScoreDisplay() {
+        const scoreDisplay = document.getElementById("score");
+        scoreDisplay.textContent = `Score: ${score}`;
     }
 
     function generateKeyboard() {
@@ -92,6 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const input = document.getElementById("capitalInput");
                 if (!input.readOnly) {
                     input.value += key;
+                    autoFill();
                 }
             });
             keyboard.appendChild(button);
@@ -164,13 +183,16 @@ document.addEventListener("DOMContentLoaded", () => {
         submitButton.addEventListener("click", () => {
             const input = document.getElementById("capitalInput");
             const correctCapital = states[currentStateIndex].capital;
+
             if (input.value.toLowerCase() === correctCapital.toLowerCase()) {
                 score++;
+                updateScoreDisplay();
             }
             currentStateIndex++;
             loadNextState();
         });
         loadNextState();
+        updateScoreDisplay(); // Reset score display on initialization
     }
 
     initializeGame();
