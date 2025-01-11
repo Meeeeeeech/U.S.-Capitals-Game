@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (input.value.toLowerCase() === correctCapital.slice(0, input.value.length).toLowerCase()) {
             if (input.value.length === 3) {
                 input.value = correctCapital;
-                input.readOnly = true;
+                input.readOnly = true; // Lock input to prevent further typing
             }
         }
     }
@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const input = document.getElementById("capitalInput");
                 if (!input.readOnly) {
                     input.value += key;
-                    autoFill();
+                    autoFill(); // Check autofill after each letter
                 }
             });
             keyboard.appendChild(button);
