@@ -53,60 +53,56 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
 
     let currentStateIndex = 0;
-    let score = 0; // Initialize the score
+    let score = 0;
     const capitalInput = document.getElementById("capitalInput");
     const stateCanvas = document.getElementById("stateCanvas");
     const ctx = stateCanvas.getContext("2d");
     const scoreDisplay = document.getElementById("score");
+    const gameContainer = document.getElementById("game");
 
     function loadStateImage(stateName) {
         const img = new Image();
-        const stateNameLower = stateName.toLowerCase().replace(/\s/g, ""); // Convert to lowercase and remove spaces
-        img.src = `images/${stateNameLower}.png`; // Path to the state image
-        console.log(`Attempting to load image: ${img.src}`); // Debug log for the image path
-
+        const stateNameLower = stateName.toLowerCase().replace(/\s/g, "");
+        img.src = `images/${stateNameLower}.png`;
         img.onload = () => {
             ctx.clearRect(0, 0, stateCanvas.width, stateCanvas.height);
             ctx.drawImage(img, 0, 0, stateCanvas.width, stateCanvas.height);
         };
-
         img.onerror = () => {
             console.error(`Failed to load image: ${img.src}`);
-            alert(`Error loading image for ${stateName}. Please check the image file.`);
         };
     }
 
     function autoFill() {
         const correctCapital = states[currentStateIndex].capital;
         if (capitalInput.value.toLowerCase() === correctCapital.slice(0, capitalInput.value.length).toLowerCase()) {
-            // Autofill only after 3 correct letters
             if (capitalInput.value.length === 3) {
-                capitalInput.value = correctCapital; // Autofill the remaining characters
-                capitalInput.readOnly = true; // Lock the input to prevent further typing
+                capitalInput.value = correctCapital;
+                capitalInput.readOnly = true;
             }
         }
     }
 
     function resetInput() {
-        capitalInput.value = ""; // Clear the input field
-        capitalInput.readOnly = false; // Unlock the input for the next round
+        capitalInput.value = "";
+        capitalInput.readOnly = false;
     }
 
     function updateScore() {
-        score += 1; // Increment the score
-        scoreDisplay.textContent = `Score: ${score}`; // Update the score display
+        score += 1;
+        scoreDisplay.textContent = `Score: ${score}`;
     }
 
     function generateKeyboard() {
         const keyboard = document.getElementById("keyboard");
-        keyboard.innerHTML = ""; // Clear any existing keyboard buttons
+        keyboard.innerHTML = "";
         const keys = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
         keys.forEach((key) => {
             const button = document.createElement("button");
             button.textContent = key;
             button.className = "key";
             button.addEventListener("click", () => {
-                if (!capitalInput.readOnly) { // Only allow input if not locked
+                if (!capitalInput.readOnly) {
                     capitalInput.value += key;
                     autoFill();
                 }
@@ -114,47 +110,75 @@ document.addEventListener("DOMContentLoaded", () => {
             keyboard.appendChild(button);
         });
 
-        // Add DELETE button
         const deleteButton = document.createElement("button");
         deleteButton.textContent = "DELETE";
         deleteButton.className = "key special";
         deleteButton.addEventListener("click", () => {
-            if (!capitalInput.readOnly && capitalInput.value.length > 0) {
-                capitalInput.value = capitalInput.value.slice(0, -1); // Remove the last letter
+            if (!capitalInput.readOnly) {
+                capitalInput.value = capitalInput.value.slice(0, -1);
             }
         });
         keyboard.appendChild(deleteButton);
 
-        // Add HINT button
         const hintButton = document.createElement("button");
         hintButton.textContent = "HINT";
         hintButton.className = "key special";
         hintButton.addEventListener("click", () => {
             const correctCapital = states[currentStateIndex].capital;
-            capitalInput.value = correctCapital.charAt(0); // Reveal only the first letter
+            capitalInput.value = correctCapital.charAt(0);
         });
         keyboard.appendChild(hintButton);
     }
 
+    function endGame() {
+        gameContainer.innerHTML = `
+            <div style="text-align: center;">
+                <h1>Game Over!</h1>
+                <p style="font-size: 2rem; font-weight: bold;">Final Score: ${score}</p>
+                <button id="tryAgain" style="padding: 10px 20px; font-size: 1.5rem; cursor: pointer;">TRY AGAIN</button>
+            </div>
+        `;
+        document.getElementById("tryAgain").addEventListener("click", restartGame);
+    }
+
+    function restartGame() {
+        currentStateIndex = 0;
+        score = 0;
+        scoreDisplay.textContent = "Score: 0";
+        gameContainer.innerHTML = `
+            <canvas id="stateCanvas" width="600" height="400"></canvas>
+            <div id="stateName" style="font-size: 2rem; font-weight: bold;"></div>
+            <div id="inputArea">
+                <input type="text" id="capitalInput" placeholder="Enter the capital" readonly />
+                <button id="submit">Submit</button>
+            </div>
+            <div id="keyboard"></div>
+        `;
+        initializeGame();
+    }
+
     function loadNextState() {
+        if (currentStateIndex >= states.length) {
+            endGame();
+            return;
+        }
         document.getElementById("stateName").textContent = states[currentStateIndex].name;
         loadStateImage(states[currentStateIndex].name);
-        resetInput(); // Reset the input for the new state
+        resetInput();
     }
 
     function initializeGame() {
-        generateKeyboard(); // Ensure the keyboard is ready
-        loadNextState(); // Load the first state
+        generateKeyboard();
+        document.getElementById("submit").addEventListener("click", () => {
+            const correctCapital = states[currentStateIndex].capital;
+            if (capitalInput.value.toLowerCase() === correctCapital.toLowerCase()) {
+                updateScore();
+            }
+            currentStateIndex++;
+            loadNextState();
+        });
+        loadNextState();
     }
 
-    document.getElementById("submit").addEventListener("click", () => {
-        const correctCapital = states[currentStateIndex].capital;
-        if (capitalInput.value.toLowerCase() === correctCapital.toLowerCase()) {
-            updateScore(); // Increase score if correct
-        }
-        currentStateIndex = (currentStateIndex + 1) % states.length;
-        loadNextState();
-    });
-
-    initializeGame(); // Start the game
+    initializeGame();
 });
