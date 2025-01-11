@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
         deleteButton.textContent = "DELETE";
         deleteButton.className = "key special";
         deleteButton.addEventListener("click", () => {
-            if (!capitalInput.readOnly) {
+            if (!capitalInput.readOnly && capitalInput.value.length > 0) {
                 capitalInput.value = capitalInput.value.slice(0, -1); // Remove the last letter
             }
         });
