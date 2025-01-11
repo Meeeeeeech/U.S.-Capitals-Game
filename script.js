@@ -54,57 +54,44 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let currentStateIndex = 0;
     let score = 0;
-    const capitalInput = document.getElementById("capitalInput");
-    const stateCanvas = document.getElementById("stateCanvas");
-    const ctx = stateCanvas.getContext("2d");
-    const scoreDisplay = document.getElementById("score");
     const gameContainer = document.getElementById("game");
 
     function loadStateImage(stateName) {
+        const canvas = document.getElementById("stateCanvas");
+        const ctx = canvas.getContext("2d");
         const img = new Image();
         const stateNameLower = stateName.toLowerCase().replace(/\s/g, "");
         img.src = `images/${stateNameLower}.png`;
+
         img.onload = () => {
-            ctx.clearRect(0, 0, stateCanvas.width, stateCanvas.height);
-            ctx.drawImage(img, 0, 0, stateCanvas.width, stateCanvas.height);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         };
+
         img.onerror = () => {
             console.error(`Failed to load image: ${img.src}`);
         };
     }
 
-    function autoFill() {
-        const correctCapital = states[currentStateIndex].capital;
-        if (capitalInput.value.toLowerCase() === correctCapital.slice(0, capitalInput.value.length).toLowerCase()) {
-            if (capitalInput.value.length === 3) {
-                capitalInput.value = correctCapital;
-                capitalInput.readOnly = true;
-            }
-        }
-    }
-
     function resetInput() {
-        capitalInput.value = "";
-        capitalInput.readOnly = false;
-    }
-
-    function updateScore() {
-        score += 1;
-        scoreDisplay.textContent = `Score: ${score}`;
+        const input = document.getElementById("capitalInput");
+        input.value = "";
+        input.readOnly = false;
     }
 
     function generateKeyboard() {
         const keyboard = document.getElementById("keyboard");
         keyboard.innerHTML = "";
         const keys = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+
         keys.forEach((key) => {
             const button = document.createElement("button");
             button.textContent = key;
             button.className = "key";
             button.addEventListener("click", () => {
-                if (!capitalInput.readOnly) {
-                    capitalInput.value += key;
-                    autoFill();
+                const input = document.getElementById("capitalInput");
+                if (!input.readOnly) {
+                    input.value += key;
                 }
             });
             keyboard.appendChild(button);
@@ -114,8 +101,9 @@ document.addEventListener("DOMContentLoaded", () => {
         deleteButton.textContent = "DELETE";
         deleteButton.className = "key special";
         deleteButton.addEventListener("click", () => {
-            if (!capitalInput.readOnly) {
-                capitalInput.value = capitalInput.value.slice(0, -1);
+            const input = document.getElementById("capitalInput");
+            if (!input.readOnly) {
+                input.value = input.value.slice(0, -1);
             }
         });
         keyboard.appendChild(deleteButton);
@@ -124,8 +112,9 @@ document.addEventListener("DOMContentLoaded", () => {
         hintButton.textContent = "HINT";
         hintButton.className = "key special";
         hintButton.addEventListener("click", () => {
+            const input = document.getElementById("capitalInput");
             const correctCapital = states[currentStateIndex].capital;
-            capitalInput.value = correctCapital.charAt(0);
+            input.value = correctCapital.charAt(0);
         });
         keyboard.appendChild(hintButton);
     }
@@ -140,13 +129,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 </button>
             </div>
         `;
+
         document.getElementById("tryAgain").addEventListener("click", restartGame);
     }
 
     function restartGame() {
         currentStateIndex = 0;
         score = 0;
-        scoreDisplay.textContent = "Score: 0";
         gameContainer.innerHTML = `
             <canvas id="stateCanvas" width="600" height="400"></canvas>
             <div id="stateName" style="font-size: 2rem; font-weight: bold;"></div>
@@ -156,7 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
             <div id="keyboard"></div>
         `;
-        initializeGame(); // Reinitialize the game
+        initializeGame();
     }
 
     function loadNextState() {
@@ -170,16 +159,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function initializeGame() {
-        generateKeyboard(); // Generate the keyboard first
-        document.getElementById("submit").addEventListener("click", () => {
+        generateKeyboard();
+        const submitButton = document.getElementById("submit");
+        submitButton.addEventListener("click", () => {
+            const input = document.getElementById("capitalInput");
             const correctCapital = states[currentStateIndex].capital;
-            if (capitalInput.value.toLowerCase() === correctCapital.toLowerCase()) {
-                updateScore();
+            if (input.value.toLowerCase() === correctCapital.toLowerCase()) {
+                score++;
             }
             currentStateIndex++;
             loadNextState();
         });
-        loadNextState(); // Load the first state
+        loadNextState();
     }
 
     initializeGame();
