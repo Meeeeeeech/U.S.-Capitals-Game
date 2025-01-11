@@ -139,6 +139,12 @@ document.addEventListener("DOMContentLoaded", () => {
     function loadNextState() {
         document.getElementById("stateName").textContent = states[currentStateIndex].name;
         loadStateImage(states[currentStateIndex].name);
+        resetInput(); // Reset the input for the new state
+    }
+
+    function initializeGame() {
+        generateKeyboard(); // Ensure the keyboard is ready
+        loadNextState(); // Load the first state
     }
 
     document.getElementById("submit").addEventListener("click", () => {
@@ -146,11 +152,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (capitalInput.value.toLowerCase() === correctCapital.toLowerCase()) {
             updateScore(); // Increase score if correct
         }
-        resetInput();
         currentStateIndex = (currentStateIndex + 1) % states.length;
         loadNextState();
     });
 
-    generateKeyboard(); // Generate the keyboard before loading the first state
-    loadNextState(); // Load the first state after keyboard initialization
+    initializeGame(); // Start the game
 });
