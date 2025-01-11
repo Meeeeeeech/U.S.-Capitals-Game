@@ -53,9 +53,11 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
 
     let currentStateIndex = 0;
+    let score = 0; // Initialize the score
     const capitalInput = document.getElementById("capitalInput");
     const stateCanvas = document.getElementById("stateCanvas");
     const ctx = stateCanvas.getContext("2d");
+    const scoreDisplay = document.getElementById("score");
 
     function loadStateImage(stateName) {
         const img = new Image();
@@ -87,6 +89,11 @@ document.addEventListener("DOMContentLoaded", () => {
     function resetInput() {
         capitalInput.value = ""; // Clear the input field
         capitalInput.readOnly = false; // Unlock the input for the next round
+    }
+
+    function updateScore() {
+        score += 1; // Increment the score
+        scoreDisplay.textContent = `Score: ${score}`; // Update the score display
     }
 
     function generateKeyboard() {
@@ -134,6 +141,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     document.getElementById("submit").addEventListener("click", () => {
+        const correctCapital = states[currentStateIndex].capital;
+        if (capitalInput.value.toLowerCase() === correctCapital.toLowerCase()) {
+            updateScore(); // Increase score if correct
+        }
         resetInput();
         currentStateIndex = (currentStateIndex + 1) % states.length;
         loadNextState();
