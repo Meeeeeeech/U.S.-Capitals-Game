@@ -133,7 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function endGame() {
         gameContainer.innerHTML = `
             <div style="text-align: center; position: absolute; top: 50%; transform: translateY(-50%);">
-                <h1 style="font-size: 3rem; margin: 0;">GAME OVER</h1>
+                <h1 style="font-size: 3rem; margin: 20px 0;">GAME OVER</h1>
                 <p style="font-size: 2rem; font-weight: bold; color: red; margin: 20px 0;">Final Score: ${score}</p>
                 <button id="tryAgain" style="padding: 15px 30px; font-size: 1.5rem; color: white; background-color: green; border: none; cursor: pointer; border-radius: 5px;">
                     TRY AGAIN
