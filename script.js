@@ -151,6 +151,6 @@ document.addEventListener("DOMContentLoaded", () => {
         loadNextState();
     });
 
-    generateKeyboard();
-    loadNextState(); // Load the first state on page load
+    generateKeyboard(); // Generate the keyboard before loading the first state
+    loadNextState(); // Load the first state after keyboard initialization
 });
